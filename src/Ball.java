@@ -8,12 +8,12 @@ public class Ball {
    private int color;
 
 
-   public Ball(int xPos, int yPos, PApplet c) {
+   public Ball(int xPos, int yPos, PApplet c) { // int col
       x = xPos;
       y = yPos;
-      size = 50;
+      size = 100;
       canvas = c;
-      color = canvas.color(randomColor());//255,0,0
+      color = canvas.color(randomColor());// color = col;
    }
 
    public void display() {

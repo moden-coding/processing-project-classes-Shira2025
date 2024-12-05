@@ -1,5 +1,6 @@
 import processing.core.*;
-public class Grid {
+
+public class Block {
     private int height;
     private int width;
     private int x;
@@ -8,15 +9,14 @@ public class Grid {
     private PApplet canvas; // access to canvas
 
 
-public Grid(int xPos, int yPos,int Width,int Height, PApplet c){
+public Block(int xPos, int yPos,int Width,int Height, PApplet c){
     x = xPos;
     y = yPos;
     width = Width;
     height = Height;
     canvas = c;
-    color = canvas.color(170, 173, 171); // gray
+    color = canvas.color(125, 118, 117);//green
 }
-
 
 public void display() {
     canvas.fill(color);
