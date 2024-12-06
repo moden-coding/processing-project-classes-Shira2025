@@ -13,12 +13,12 @@ public class Ball {
       y = yPos;
       size = 100;
       canvas = c;
-      color = canvas.color(randomColor());// color = col;
+      color = canvas.color(52, 40, 156);// color = col; randomColor()
    }
 
    public void display() {
-      canvas.circle(x, y, size);
       canvas.fill(color);
+      canvas.circle(x, y, size);
    }
      
 

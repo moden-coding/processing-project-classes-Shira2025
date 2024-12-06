@@ -12,10 +12,13 @@ public class App extends PApplet {
     }
 
     public void setup() {
+        background(128, 28, 89);
         balls = new ArrayList<>();
-        // gridMaker(); // should not be on top
+        blocks = new ArrayList<>();
+        // gridMaker(); 
+        blockMaker();
         ballMaker();
-        // blockMaker();
+       
 
     }
 
@@ -24,27 +27,29 @@ public class App extends PApplet {
     }
 
     public void draw() {
-        for (Ball b : balls) {
-            b.display();
-        }
         for (Block B : blocks) {
             B.display();
         }
-
+        for (Ball b : balls) {
+            b.display();
+        }
     }
 
-    public void ballMaker() { // make a 9 balls in a 3x3 row
+    public void ballMaker() { // make a 8 balls in a 3x3 row not working 
         int y = 200;
-        for (int rows = 0; rows < 3; rows++) {
+        for (int row = 0; row < 3; row++) {
             int x = 200;
-            for (int elements = 0; elements < 3; elements++) {
+            for (int column = 0; column < 3; column++) {
+                if (row == 2 && column == 2){
+                    break;
+                } 
                 Ball ball = new Ball(x, y, this);
                 balls.add(ball);
+                System.out.println("made one here");
                 x += 200;
             }
             y += 200;
         }
-
     }
 
     public void gridMaker() { /// draw the grid outline
@@ -65,13 +70,5 @@ public class App extends PApplet {
             }
             y += 200;
         }
-        // int x = 100;
-        // int y = 100;
-        // while (blocks.size() < 9){
-        // x = x + 200;
-        // y = y + 200;
-        // // strokeWeight(30);
-        // Block block = new Block (x,y,200,200,this);
-        // blocks.add(block);
     }
 }

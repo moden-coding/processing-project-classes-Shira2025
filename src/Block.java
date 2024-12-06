@@ -15,7 +15,7 @@ public Block(int xPos, int yPos,int Width,int Height, PApplet c){
     width = Width;
     height = Height;
     canvas = c;
-    color = canvas.color(125, 118, 117);//green
+    color = canvas.color(125, 118, 117);
 }
 
 public void display() {
