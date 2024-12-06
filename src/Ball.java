@@ -1,14 +1,13 @@
 import processing.core.*;
-public class Ball { 
 
+public class Ball {
    private int x;
    private int y;
    private int size;
-   private PApplet canvas; // access to canvas 
+   private PApplet canvas; // access to canvas
    private int color;
 
-
-   public Ball(int xPos, int yPos, PApplet c) { // int col
+   public Ball(int xPos, int yPos, PApplet c) {
       x = xPos;
       y = yPos;
       size = 100;
@@ -20,15 +19,23 @@ public class Ball {
       canvas.fill(color);
       canvas.circle(x, y, size);
    }
-     
 
-   public void update(){
+   public void update() {
 
-      }
-   
-   public int randomColor(){
-      return canvas.color(canvas.random(255),canvas.random(255),canvas.random(255)); // random color 
    }
 
+   public int randomColor() {
+      return canvas.color(canvas.random(255), canvas.random(255), canvas.random(255)); // random color
+   }
 
 }
+// private float radius; // chat gpt
+// boolean isMouseInside(float mouseX, float mouseY) { // chat gpt
+// float dx = mouseX - x;
+// float dy = mouseY - y;
+// float distanceSquared = dx * dx + dy * dy;
+// float radiusSquared = radius * radius;
+// return distanceSquared <= radiusSquared;
+
+// } this.radius = radius; // chat gpt
+// int col float radius,

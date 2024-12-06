@@ -5,6 +5,8 @@ import processing.core.*;
 public class App extends PApplet {
     ArrayList<Ball> balls;
     ArrayList<Block> blocks;
+    boolean moveBall = false;
+    ArrayList<Integer> positions;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -15,10 +17,10 @@ public class App extends PApplet {
         background(128, 28, 89);
         balls = new ArrayList<>();
         blocks = new ArrayList<>();
-        // gridMaker(); 
+        positions= new ArrayList<>();
+        // gridMaker();
         blockMaker();
         ballMaker();
-       
 
     }
 
@@ -35,21 +37,24 @@ public class App extends PApplet {
         }
     }
 
-    public void ballMaker() { // make a 8 balls in a 3x3 row not working 
+    public void ballMaker() { // make a 8 balls in a 3x3 row not working
         int y = 200;
         for (int row = 0; row < 3; row++) {
             int x = 200;
             for (int column = 0; column < 3; column++) {
-                if (row == 2 && column == 2){
+                if (row == 2 && column == 2) {
                     break;
-                } 
+                }
                 Ball ball = new Ball(x, y, this);
+                positions.add(x);
+                positions.add(y);
                 balls.add(ball);
                 System.out.println("made one here");
                 x += 200;
             }
             y += 200;
         }
+        System.out.println(positions);
     }
 
     public void gridMaker() { /// draw the grid outline
