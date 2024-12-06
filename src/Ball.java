@@ -7,11 +7,13 @@ public class Ball {
    private PApplet canvas; // access to canvas
    private int color;
 
-   public Ball(int xPos, int yPos, PApplet c) {
+   // private float radius; // chat gpt
+   public Ball(int xPos, int yPos, PApplet c) { // float radius,
       x = xPos;
       y = yPos;
       size = 100;
       canvas = c;
+      // this.radius = radius; // chat gpt
       color = canvas.color(52, 40, 156);// color = col; randomColor()
    }
 
@@ -29,13 +31,10 @@ public class Ball {
    }
 
 }
-// private float radius; // chat gpt
+
 // boolean isMouseInside(float mouseX, float mouseY) { // chat gpt
 // float dx = mouseX - x;
 // float dy = mouseY - y;
 // float distanceSquared = dx * dx + dy * dy;
 // float radiusSquared = radius * radius;
 // return distanceSquared <= radiusSquared;
-
-// } this.radius = radius; // chat gpt
-// int col float radius,
