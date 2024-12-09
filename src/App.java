@@ -3,11 +3,7 @@ import java.util.ArrayList;
 import processing.core.*;
 
 public class App extends PApplet {
-    ArrayList<Ball> balls;
     ArrayList<Block> blocks;
-    boolean moveBall = false;
-    ArrayList<Integer> positions;
-    int pressedCircle = -1;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -16,13 +12,9 @@ public class App extends PApplet {
 
     public void setup() {
         background(128, 28, 89);
-        balls = new ArrayList<>();
         blocks = new ArrayList<>();
-        positions = new ArrayList<>();
         gridMaker();
         blockMaker();
-        ballMaker();
-
     }
 
     public void settings() {
@@ -32,41 +24,6 @@ public class App extends PApplet {
     public void draw() {
         for (Block B : blocks) {
             B.display();
-        }
-        for (Ball b : balls) {
-            b.display();
-        }
-        for (int i = 0; i < balls.size(); i++) { // checking chat gpt
-            Ball b = balls.get(i);
-            // If the mouse is inside the circle, set its color to red
-            if (b.isMouseInside(mouseX, mouseY)) {
-                b.setColor(color(255, 0, 0)); // Red
-            } else {
-                b.setColor(color(52, 40, 156)); // Default blue
-            }
-
-            b.display(); // Draw the circle
-        }
-    }
-
-    public void ballMaker() { // make a 8 balls in a 3x3 row not working
-        int y = 200;
-        int n = 0;
-        for (int row = 0; row < 3; row++) {
-            int x = 200;
-            for (int column = 0; column < 3; column++) {
-                if (row == 2 && column == 2) {
-                    break;
-                }
-                Ball ball = new Ball(n, x, y, 50, this);
-                positions.add(x);
-                positions.add(y);
-                balls.add(ball);
-                System.out.println("made one here");
-                x += 200;
-                n++;
-            }
-            y += 200;
         }
     }
 
@@ -89,17 +46,25 @@ public class App extends PApplet {
             y += 200;
 
         }
+        blocks.get(8).changeVisible(); // hide the last ball
     }
 
     public void mousePressed() {
-        for (int i = 0; i < balls.size(); i++) {
-            Ball b = balls.get(i);
+        System.out.println("mouse pressed");
+        for (int i = 0; i < blocks.size(); i++) {
+            Block b = blocks.get(i);
             if (b.isMouseInside(mouseX, mouseY)) {
-                pressedCircle = b.number;
-                System.out.println("pressed circle =" + b.number);
-            } else {
-                pressedCircle = -1;
+                System.out.println("mouse inside");
+                Block rightBlock = blocks.get(i+1);
+                if(i % 3 != 2 && rightBlock.ballVisible() == false){
+                    System.out.println("block visible");
+                    rightBlock.changeVisible();
+                    b.changeVisible();
+                }
+                
+               
             }
         }
     }
+
 }

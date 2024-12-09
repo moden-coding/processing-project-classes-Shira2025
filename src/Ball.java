@@ -17,6 +17,14 @@ public class Ball {
       color = canvas.color(52, 40, 156);// color = col; randomColor()
    }
 
+   public Ball(int xPos, int yPos, PApplet c) { 
+      x = xPos;
+      y = yPos;
+      canvas = c;
+      this.radius = 50; 
+      color = canvas.color(52, 40, 156);// color = col; randomColor()
+   }
+
    public void display() {
       canvas.fill(color);
       canvas.circle(x, y, radius*2 ); // circle() wants the diameter
