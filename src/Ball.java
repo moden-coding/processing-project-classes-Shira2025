@@ -5,29 +5,29 @@ public class Ball {
    private int y;
    private PApplet canvas; // access to canvas
    private int color;
-   private float radius; 
+   private float radius;
    public int number;
 
-   public Ball(int number,int xPos, int yPos, float radius, PApplet c) { 
+   public Ball(int number, int xPos, int yPos, float radius, PApplet c) {
       x = xPos;
       y = yPos;
       canvas = c;
-      this.radius = radius; 
+      this.radius = radius;
       this.number = number;
       color = canvas.color(52, 40, 156);// color = col; randomColor()
    }
 
-   public Ball(int xPos, int yPos, PApplet c) { 
+   public Ball(int xPos, int yPos, PApplet c) {
       x = xPos;
       y = yPos;
       canvas = c;
-      this.radius = 50; 
+      this.radius = 50;
       color = canvas.color(52, 40, 156);// color = col; randomColor()
    }
 
    public void display() {
       canvas.fill(color);
-      canvas.circle(x, y, radius*2 ); // circle() wants the diameter
+      canvas.circle(x, y, radius * 2); // circle() wants the diameter
    }
 
    public void update() {
@@ -46,12 +46,12 @@ public class Ball {
 
       // Compare squared distance to squared radius
       float radiusSquared = radius * radius;
-      if (x == 200 && y == 200){
+      if (x == 200 && y == 200) {
       }
       return distanceSquared <= radiusSquared;
    }
 
-   void setColor(int newColor) { // checking chat gpt 
-      this.color = newColor;
-    }
+   // void setColor(int newColor) { 
+   //    this.color = newColor;
+   // }
 }
