@@ -10,6 +10,16 @@ public class Block {
     Ball myBall;
     private PApplet canvas; // access to canvas
     public boolean ballVisible;
+    private int[] colors = {
+        235, 52, 110,
+        237, 111, 43,
+        237, 201, 40,
+        37, 217, 76,
+        36, 201, 163,
+        34, 107, 201,
+        112, 28, 201,
+        201, 26, 196,
+        138, 30, 70};
 
     public Block(int xPos, int yPos, int Width, int Height, PApplet c) {
         x = xPos;

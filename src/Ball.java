@@ -1,12 +1,26 @@
+import java.util.ArrayList;
+
 import processing.core.*;
 
 public class Ball {
    private int x;
    private int y;
    private PApplet canvas; // access to canvas
-   private int color;
    private float radius;
    public int number;
+   private int color;
+   // private ArrayList<Integer> colors = {
+   //    235, 52, 110,
+   //    237, 111, 43,
+   //    237, 201, 40,
+   //    37, 217, 76,
+   //    36, 201, 163,
+   //    34, 107, 201,
+   //    112, 28, 201,
+   //    201, 26, 196,
+   //    138, 30, 70};
+     
+   // ArrayList<Integer> colors = new ArrayList<>();
 
    public Ball(int number, int xPos, int yPos, float radius, PApplet c) {
       x = xPos;
@@ -30,7 +44,10 @@ public class Ball {
       canvas.circle(x, y, radius * 2); // circle() wants the diameter
    }
 
-   public void update() {
+   // public int[] getColor() {
+   // return color;
+   // }
+   public void setColor() {
 
    }
 
@@ -50,8 +67,4 @@ public class Ball {
       }
       return distanceSquared <= radiusSquared;
    }
-
-   // void setColor(int newColor) { 
-   //    this.color = newColor;
-   // }
 }

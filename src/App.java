@@ -15,7 +15,6 @@ public class App extends PApplet {
     public void setup() {
         background(143, 155, 176);
         blocks = new ArrayList<>();
-        gridMaker();
         blockMaker();
     }
 
@@ -29,15 +28,12 @@ public class App extends PApplet {
         }
     }
 
-    public void gridMaker() { /// draw the grid outline
-        int x = 100;
-        int y = 100;
-        strokeWeight(5);
-        Grid grid = new Grid(x, y, 600, 600, this);
-        grid.display();
+    public void gameSet(){ 
+        background(214, 139, 167);
     }
 
     public void blockMaker() { /// draw the grid
+        strokeWeight(5);
         int y = 100;
         for (int rows = 0; rows < 3; rows++) {
             int x = 100;
