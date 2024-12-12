@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import processing.core.*;
 
 public class Block {
@@ -10,26 +12,18 @@ public class Block {
     Ball myBall;
     private PApplet canvas; // access to canvas
     public boolean ballVisible;
-    private int[] colors = {
-        235, 52, 110,
-        237, 111, 43,
-        237, 201, 40,
-        37, 217, 76,
-        36, 201, 163,
-        34, 107, 201,
-        112, 28, 201,
-        201, 26, 196,
-        138, 30, 70};
+    public int ballColor;
 
-    public Block(int xPos, int yPos, int Width, int Height, PApplet c) {
+    public Block(int xPos, int yPos, int Width, int Height, PApplet c, int color, int ballColor) {
         x = xPos;
         y = yPos;
         width = Width;
         height = Height;
         canvas = c;
-        myBall = new Ball(x + width / 2, y + width / 2, canvas);
-        color = canvas.color(125, 118, 117);
-        ballVisible = true;
+        this.ballColor = ballColor;
+        myBall = new Ball(x + width / 2, y + width / 2,ballColor, canvas);
+        this.color = color;
+        ballVisible = true;  
     }
 
     public void display() {
@@ -48,8 +42,8 @@ public class Block {
     public boolean isMouseInside(int mouseX, int mouseY) {
         return myBall.isMouseInside(mouseX, mouseY);
     }
- 
-    public boolean ballVisible(){
+
+    public boolean ballVisible() {
         return ballVisible;
     }
 }

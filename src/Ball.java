@@ -9,34 +9,14 @@ public class Ball {
    private float radius;
    public int number;
    private int color;
-   // private ArrayList<Integer> colors = {
-   //    235, 52, 110,
-   //    237, 111, 43,
-   //    237, 201, 40,
-   //    37, 217, 76,
-   //    36, 201, 163,
-   //    34, 107, 201,
-   //    112, 28, 201,
-   //    201, 26, 196,
-   //    138, 30, 70};
-     
-   // ArrayList<Integer> colors = new ArrayList<>();
 
-   public Ball(int number, int xPos, int yPos, float radius, PApplet c) {
-      x = xPos;
-      y = yPos;
-      canvas = c;
-      this.radius = radius;
-      this.number = number;
-      color = canvas.color(52, 40, 156);// color = col; randomColor()
-   }
-
-   public Ball(int xPos, int yPos, PApplet c) {
+   public Ball(int xPos, int yPos, int color, PApplet c) { // int color
       x = xPos;
       y = yPos;
       canvas = c;
       this.radius = 50;
-      color = canvas.color(52, 40, 156);// color = col; randomColor()
+      this.color = color;
+      // color = canvas.color(128, 138, 171);// color = col; randomColor()
    }
 
    public void display() {
@@ -45,11 +25,12 @@ public class Ball {
    }
 
    // public int[] getColor() {
-   // return color;
+   //    return color;
    // }
-   public void setColor() {
 
-   }
+   // public void setColor() {
+      
+   // }
 
    public int randomColor() {
       return canvas.color(canvas.random(255), canvas.random(255), canvas.random(255)); // random color
