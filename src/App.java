@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 public class App extends PApplet {
     ArrayList<Block> blocks;
     int moves = 0;
+    int highScore = 10000;
     int time = 0; // need milis in here
     int[] colors;
     int[] ballColors;
@@ -22,8 +23,7 @@ public class App extends PApplet {
     public void setup() {
         blocks = new ArrayList<>();
         blockMaker();
-        // readMoves();
-
+        readHighScore();
     }
 
     public void settings() {
@@ -42,6 +42,14 @@ public class App extends PApplet {
 
     public void gameSet() {
         background(143, 155, 176);// blue gray
+        textSize(100);
+        fill(174, 52, 235);
+        text("Solve It", 250, 100);
+        fill(128, 237, 230);
+        textSize(35);
+        rect(300,400,200, 100);
+        // fill(0);
+        // text("Instructions",320,450);
     }
 
     public void gamePlay() {
@@ -53,15 +61,23 @@ public class App extends PApplet {
 
     public void notGamePlay() {
         background(143, 155, 176);// blue gray
+        readHighScore();
+        if (highScore > moves) {
+            highScore = moves;
+            saveMoves();
+        }
+        textSize(50);
+        fill(0);
+        text("Moves:", 300, 300);
+        text(moves, 450, 300);
+        text("High score:", 300, 500);
+        text(highScore, 550, 500);
+
     }
 
     public void keyPressed() {
         if (key == ' ') {
             scene = 2;
-            background(143, 155, 176);// blue gray
-            saveMoves();
-            readMoves();
-            text(100, 400, moves);
         } else if (key == 'v') {
             scene = 1;
         }
@@ -110,7 +126,6 @@ public class App extends PApplet {
         for (int i = 0; i < blocks.size(); i++) {
             Block b = blocks.get(i);
             if (b.isMouseInside(mouseX, mouseY)) {
-                System.out.println("mouse pressed");
                 // check right
                 if (i % 3 != 2) {
                     Block rightBlock = blocks.get(i + 1);
@@ -154,25 +169,24 @@ public class App extends PApplet {
     }
 
     public void saveMoves() {
-        try (PrintWriter writer = new PrintWriter("Moves.txt")) {
-            writer.println(moves); // Writes the integer to the file
+        try (PrintWriter writer = new PrintWriter("Highscore.txt")) {
+            writer.println(highScore); // Writes the integer to the file
             writer.close(); // Closes the writer and saves the file
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the file.");
             e.printStackTrace();
         }
-
     }
 
-    public void readMoves() {
+    public void readHighScore() {
         // we create a scanner for reading the file
-        try (Scanner scanner = new Scanner(Paths.get("Moves.txt"))) {
+        try (Scanner scanner = new Scanner(Paths.get("Highscore.txt"))) {
             // we read the file until all lines have been read
             while (scanner.hasNextLine()) {
                 // we read one line
                 String row = scanner.nextLine();
                 // we print the line that we read
-                moves = Integer.valueOf(row);
+                highScore = Integer.valueOf(row);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
