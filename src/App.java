@@ -2,15 +2,17 @@ import java.util.ArrayList;
 
 import processing.core.*;
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Paths;
 
 public class App extends PApplet {
     ArrayList<Block> blocks;
     int moves = 0;
-    int FileMoves = 0;
     int time = 0; // need milis in here
-    private int[] colors;
-    private int[] ballColors;
+    int[] colors;
+    int[] ballColors;
+    int scene = 0;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -18,7 +20,6 @@ public class App extends PApplet {
     }
 
     public void setup() {
-        background(143, 155, 176);
         blocks = new ArrayList<>();
         blockMaker();
         // readMoves();
@@ -30,13 +31,40 @@ public class App extends PApplet {
     }
 
     public void draw() {
+        if (scene == 0) {
+            gameSet();
+        } else if (scene == 1) {
+            gamePlay();
+        } else if (scene == 2) {
+            notGamePlay();
+        }
+    }
+
+    public void gameSet() {
+        background(143, 155, 176);// blue gray
+    }
+
+    public void gamePlay() {
+        background(92, 109, 138);// dark blue gray
         for (Block B : blocks) {
             B.display();
         }
     }
 
-    public void gameSet() {
-        background(214, 139, 167);
+    public void notGamePlay() {
+        background(143, 155, 176);// blue gray
+    }
+
+    public void keyPressed() {
+        if (key == ' ') {
+            scene = 2;
+            background(143, 155, 176);// blue gray
+            saveMoves();
+            readMoves();
+            text(100, 400, moves);
+        } else if (key == 'v') {
+            scene = 1;
+        }
     }
 
     public void blockMaker() { /// draw the grid
@@ -124,19 +152,30 @@ public class App extends PApplet {
             }
         }
     }
-    public void readMoves(){
-        //  // we create a scanner for reading the file
-        //  try (Scanner scanner = new Scanner(Paths.get("Moves.txt"))) {
 
-        //     // we read the file until all lines have been read
-        //     while (scanner.hasNextLine()) {
-        //         // we read one line
-        //         String row = scanner.nextLine();
-        //         // we print the line that we read
-        //         FileMoves = Integer.ValueOf(row);
-        //     }
-        // } catch (Exception e) {
-        //     System.out.println("Error: " + e.getMessage());
-        // }
+    public void saveMoves() {
+        try (PrintWriter writer = new PrintWriter("Moves.txt")) {
+            writer.println(moves); // Writes the integer to the file
+            writer.close(); // Closes the writer and saves the file
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void readMoves() {
+        // we create a scanner for reading the file
+        try (Scanner scanner = new Scanner(Paths.get("Moves.txt"))) {
+            // we read the file until all lines have been read
+            while (scanner.hasNextLine()) {
+                // we read one line
+                String row = scanner.nextLine();
+                // we print the line that we read
+                moves = Integer.valueOf(row);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }
