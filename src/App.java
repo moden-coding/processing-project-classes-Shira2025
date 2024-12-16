@@ -20,14 +20,14 @@ public class App extends PApplet {
 
     }
 
-    public void setup() {
+    public void setup() { // make the lists and check list and make blocks
         blocks = new ArrayList<>();
         blockMaker();
         readHighScore();
     }
 
-    public void settings() {
-        size(800, 800); // Set the size of the window
+    public void settings() {// Set the size of the window
+        size(800, 800); 
     }
 
     public void draw() {
@@ -40,26 +40,26 @@ public class App extends PApplet {
         }
     }
 
-    public void gameSet() {
+    public void gameSet() { // the start screen 
         background(143, 155, 176);// blue gray
         textSize(100);
         fill(174, 52, 235);
         text("Solve It", 250, 100);
         fill(128, 237, 230);
         textSize(35);
-        rect(300,400,200, 100);
-        // fill(0);
-        // text("Instructions",320,450);
+        rect(300, 400, 200, 100); // should be clickable need if mouse is in rect 
+        fill(0);
+        text("Instructions", 320, 450);
     }
 
-    public void gamePlay() {
+    public void gamePlay() { // showing balls and gamescreen
         background(92, 109, 138);// dark blue gray
         for (Block B : blocks) {
             B.display();
         }
     }
 
-    public void notGamePlay() {
+    public void notGamePlay() { // moves screen
         background(143, 155, 176);// blue gray
         readHighScore();
         if (highScore > moves) {
@@ -72,10 +72,9 @@ public class App extends PApplet {
         text(moves, 450, 300);
         text("High score:", 300, 500);
         text(highScore, 550, 500);
-
     }
 
-    public void keyPressed() {
+    public void keyPressed() { // maybe a keypressed for highscore 
         if (key == ' ') {
             scene = 2;
         } else if (key == 'v') {
@@ -84,7 +83,8 @@ public class App extends PApplet {
     }
 
     public void blockMaker() { /// draw the grid
-        colors = new int[] { color(130, 103, 191), // light purple
+        colors = new int[] { 
+                color(130, 103, 191), // light purple
                 color(34, 107, 201), // blue
                 color(237, 201, 40), // yellow
                 color(37, 217, 76), // light green
@@ -94,15 +94,16 @@ public class App extends PApplet {
                 color(112, 28, 201), // purple
                 color(138, 30, 70) // maroon
         };
-        ballColors = new int[] { color(130, 103, 191), // light purple
-                color(34, 107, 201), // blue
-                color(237, 201, 40), // yellow
-                color(37, 217, 76), // light green
-                color(36, 201, 163), // teal
-                color(237, 111, 43), // orange
-                color(201, 26, 196), // pink
+        ballColors = new int[] {
+                color(138, 30, 70), // maroon
                 color(112, 28, 201), // purple
-                color(138, 30, 70) // maroon
+                color(201, 26, 196), // pink
+                color(237, 111, 43), // orange
+                color(37, 217, 76), // light green
+                color(237, 201, 40), // yellow
+                color(34, 107, 201), // blue
+                color(130, 103, 191), // light purple
+                color(36, 201, 163) // teal
         };
 
         strokeWeight(5);
@@ -111,7 +112,8 @@ public class App extends PApplet {
         for (int rows = 0; rows < 3; rows++) {
             int x = 100;
             for (int elements = 0; elements < 3; elements++) {
-                Block block = new Block(x, y, 200, 200, this, colors[colorPos], ballColors[colorPos]);
+                Block block = new Block(x, y, 200, 200, this, colors[colorPos], ballColors[colorPos]); 
+                // ball and block should be random
                 blocks.add(block);
                 x += 200;
                 colorPos++;
@@ -129,40 +131,22 @@ public class App extends PApplet {
                 // check right
                 if (i % 3 != 2) {
                     Block rightBlock = blocks.get(i + 1);
-                    if (rightBlock.ballVisible() == false) {
-                        rightBlock.changeVisible();
-                        // b.getColor();
-                        // b.setColor();
-                        b.changeVisible();
-                        moves++;
-                    }
+                    checkBlockPos(b, rightBlock);
                 }
                 // check left
                 if (i % 3 != 0) {
                     Block leftBlock = blocks.get(i - 1);
-                    if (leftBlock.ballVisible() == false) {
-                        leftBlock.changeVisible();
-                        b.changeVisible();
-                        moves++;
-                    }
+                    checkBlockPos(b, leftBlock);
                 }
                 // check up
                 if (i / 3 != 0) {
                     Block upBlock = blocks.get(i - 3);
-                    if (upBlock.ballVisible() == false) {
-                        upBlock.changeVisible();
-                        b.changeVisible();
-                        moves++;
-                    }
+                    checkBlockPos(b, upBlock);
                 }
                 // check down
                 if (i / 3 != 2) {
                     Block downBlock = blocks.get(i + 3);
-                    if (downBlock.ballVisible() == false) {
-                        downBlock.changeVisible();
-                        b.changeVisible();
-                        moves++;
-                    }
+                    checkBlockPos(b, downBlock);
                 }
             }
         }
@@ -190,6 +174,15 @@ public class App extends PApplet {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void checkBlockPos(Block b, Block Block) {
+        if (Block.ballVisible() == false) { // checking if the ball is not visible
+            Block.setBallColor(b.getBallColor()); // setting the ball to the other color
+            Block.changeVisible();
+            b.changeVisible();
+            moves++;
         }
     }
 }

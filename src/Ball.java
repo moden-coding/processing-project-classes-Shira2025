@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import processing.core.*;
 
 public class Ball {
@@ -10,7 +8,7 @@ public class Ball {
    public int number;
    private int color;
 
-   public Ball(int xPos, int yPos, int color, PApplet c) { // int color
+   public Ball(int xPos, int yPos, int color, PApplet c) { // making ball 
       x = xPos;
       y = yPos;
       canvas = c;
@@ -21,22 +19,14 @@ public class Ball {
 
    public void display() {
       canvas.fill(color);
-      canvas.circle(x, y, radius * 2); // circle() wants the diameter
+      canvas.circle(x, y, radius * 2);
    }
 
-   // public int[] getColor() {
-   //    return color;
-   // }
-
-   // public void setColor() {
-      
-   // }
-
-   public int randomColor() {
+   public int randomColor() { // want to use 
       return canvas.color(canvas.random(255), canvas.random(255), canvas.random(255)); // random color
    }
 
-   boolean isMouseInside(float mouseX, float mouseY) { // chat gpt
+   boolean isMouseInside(float mouseX, float mouseY) { // chat gpt math 
       // Calculate the squared distance between the mouse and the circle's center
       float dx = mouseX - x;
       float dy = mouseY - y;
@@ -47,5 +37,13 @@ public class Ball {
       if (x == 200 && y == 200) {
       }
       return distanceSquared <= radiusSquared;
+   }
+
+   public int getColor() { // getting the color of ball
+      return color;
+   }
+
+   public void setColor(int c) { // setting the color of ball 
+      color = c;
    }
 }
