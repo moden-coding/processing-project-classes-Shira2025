@@ -52,4 +52,8 @@ public class Block {
     public void setBallColor(int color) { // setting ball color 
         myBall.setColor(color);
     }
+
+    public int getBlockColor() { // getting block color  
+        return color;
+    }
 }
