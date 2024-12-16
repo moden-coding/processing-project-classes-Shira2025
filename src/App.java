@@ -75,7 +75,7 @@ public class App extends PApplet {
     public void instrucions() {
         background(66, 245, 179);// light green
         strokeWeight(2);
-        fill(34, 107, 201);
+        fill(150, 39, 137); // pink
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
@@ -218,15 +218,19 @@ public class App extends PApplet {
         }
     }
     // public void checkCorrect(Block b, Block Block){
-    //     if (b.getBallColor() == getBlockColor()){
-    //         correct = true;
-    //         rightPlace ++ ;
-    //     }
-    //     else {
-    //         correct = false;
-    //         int rightPlace = 0;
-    //     }
+    // if (b.getBallColor() == getBlockColor()){
+    // correct = true;
+    // rightPlace ++ ;
+    // }
+    // else {
+    // correct = false;
+    // int rightPlace = 0;
+    // }
     // }
 }
-//  = delcare 
-//  == Compare
+// = delcare
+// == Compare
+
+// 4x4
+// timer
+// final screen with score and moves
