@@ -66,6 +66,7 @@ public class App extends PApplet {
             B.display();
         }
         strokeWeight(2);
+        fill(34, 107, 201); //pink box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
@@ -75,7 +76,7 @@ public class App extends PApplet {
     public void instrucions() {
         background(66, 245, 179);// light green
         strokeWeight(2);
-        fill(150, 39, 137); // pink
+        fill(34, 107, 201); //pink box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
