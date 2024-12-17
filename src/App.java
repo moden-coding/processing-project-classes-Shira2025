@@ -224,15 +224,18 @@ public class App extends PApplet {
         }
         return randomizedColor;
     }
-    // public void checkCorrect(Block b, Block Block) {
-    // if (b.getBallColor() == getBlockColor()) {
-    // correct = true;
-    // rightPlace++;
-    // } else {
-    // correct = false;
-    // int rightPlace = 0;
-    // }
-    // }
+
+    public void checkCorrect(Block b, Block Block) {
+        if (b.getBallColor() == Block.getBlockColor()) {
+            correct = true;
+            rightPlace++;
+            System.out.println(rightPlace);
+        } else {
+            correct = false;
+            rightPlace--;
+            System.out.println(rightPlace);
+        }
+    }
 
 }
 // = delcare
