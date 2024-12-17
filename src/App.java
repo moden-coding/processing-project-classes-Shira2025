@@ -16,10 +16,14 @@ public class App extends PApplet {
     int scene = 0;
     boolean correct = true;
     int rightPlace = 0;
+    int boxHeight = 100;
+    int boxWidth = 200;
+    int buttonX = 300;
+    int instructionsY = 400;
+    int gamePlayY = 600;
 
     public static void main(String[] args) {
         PApplet.main("App");
-
     }
 
     public void setup() { // make the lists and check list and make blocks
@@ -42,6 +46,7 @@ public class App extends PApplet {
         } else if (scene == 3) {
             notGamePlay();
         }
+
     }
 
     public void gameSet() { // the start screen
@@ -49,10 +54,10 @@ public class App extends PApplet {
         textSize(100);
         fill(174, 52, 235);
         text("Solve It", 250, 100);
-        fill(128, 237, 230);
         textSize(35);
-        rect(300, 400, 200, 100);// for instructions
-        rect(300, 600, 200, 100); // for gameplay
+        fill(128, 237, 230);
+        rect(buttonX, instructionsY, boxWidth, boxHeight);// for instructions
+        rect(buttonX, gamePlayY, boxWidth, boxHeight); // for gameplay
         fill(0);
         text("Instructions", 320, 450);
         textSize(60);
@@ -66,7 +71,7 @@ public class App extends PApplet {
             B.display();
         }
         strokeWeight(2);
-        fill(34, 107, 201); //pink box
+        fill(34, 107, 201); // pink box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
@@ -76,7 +81,7 @@ public class App extends PApplet {
     public void instrucions() {
         background(66, 245, 179);// light green
         strokeWeight(2);
-        fill(34, 107, 201); //pink box
+        fill(34, 107, 201); // pink box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
@@ -106,37 +111,50 @@ public class App extends PApplet {
         }
     }
 
-    public void blockMaker() { /// draw the grid
-        colors = new int[] {
-                color(130, 103, 191), // light purple
-                color(34, 107, 201), // blue
-                color(237, 201, 40), // yellow
-                color(37, 217, 76), // light green
-                color(36, 201, 163), // teal
-                color(237, 111, 43), // orange
-                color(201, 26, 196), // pink
-                color(112, 28, 201), // purple
-                color(138, 30, 70) // maroon
-        };
-        ballColors = new int[] {
-                color(138, 30, 70), // maroon
-                color(112, 28, 201), // purple
-                color(201, 26, 196), // pink
-                color(237, 111, 43), // orange
-                color(37, 217, 76), // light green
-                color(237, 201, 40), // yellow
-                color(34, 107, 201), // blue
-                color(130, 103, 191), // light purple
-                color(36, 201, 163) // teal
-        };
+    public void saveMoves() {
+        try (PrintWriter writer = new PrintWriter("Highscore.txt")) {
+            writer.println(highScore); // Writes the integer to the file
+            writer.close(); // Closes the writer and saves the file
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            e.printStackTrace();
+        }
+    }
 
+    public void readHighScore() {
+        // we create a scanner for reading the file
+        try (Scanner scanner = new Scanner(Paths.get("Highscore.txt"))) {
+            // we read the file until all lines have been read
+            while (scanner.hasNextLine()) {
+                // we read one line
+                String row = scanner.nextLine();
+                // we print the line that we read
+                highScore = Integer.valueOf(row);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void checkBlockPos(Block b, Block Block) {
+        if (Block.ballVisible() == false) { // checking if the ball is not visible
+            Block.setBallColor(b.getBallColor()); // setting the ball to the other color
+            Block.changeVisible();
+            b.changeVisible();
+            moves++;
+        }
+    }
+
+    public void blockMaker() { // draw the grid
+        ArrayList<Integer> blockColors = getRandomColors();
+        ArrayList<Integer> circleColors = getRandomColors();
         strokeWeight(5);
         int y = 100;
         int colorPos = 0;
         for (int rows = 0; rows < 3; rows++) {
             int x = 100;
             for (int elements = 0; elements < 3; elements++) {
-                Block block = new Block(x, y, 200, 200, this, colors[colorPos], ballColors[colorPos]);
+                Block block = new Block(x, y, 200, 200, this, blockColors.get(colorPos), circleColors.get(colorPos));
                 // ball and block should be random
                 blocks.add(block);
                 x += 200;
@@ -174,60 +192,48 @@ public class App extends PApplet {
                 }
             }
         }
-        if (mouseX > 300 && mouseY > 400 && mouseX < 300 + 200 && mouseY < 400 + 100) {// instructions
+        if (mouseX > buttonX && mouseY > instructionsY && mouseX < buttonX + boxWidth
+                && mouseY < boxHeight + instructionsY && scene == 0) {// instructions
             scene = 1;
         }
-        if (mouseX > 300 && mouseY > 600 && mouseX < 300 + 200 && mouseY < 600 + 100) {// gameplay
+        if (mouseX > buttonX && mouseY > gamePlayY && mouseX < buttonX + boxWidth
+                && mouseY < gamePlayY + boxWidth && scene == 0) {// gameplay
             scene = 2;
         }
-        if (mouseX > 50 && mouseY > 710 && mouseX < 50 + 125 && mouseY < 710 + 75) {// gameplay
+        if (mouseX > 50 && mouseY > 710 && mouseX < 50 + 125 && mouseY < 710 + 75) {// back
             scene = 0;
         }
     }
 
-    public void saveMoves() {
-        try (PrintWriter writer = new PrintWriter("Highscore.txt")) {
-            writer.println(highScore); // Writes the integer to the file
-            writer.close(); // Closes the writer and saves the file
-        } catch (IOException e) {
-            System.out.println("An error occurred while writing to the file.");
-            e.printStackTrace();
+    public ArrayList<Integer> getRandomColors() {
+        ArrayList<Integer> colors = new ArrayList<>();
+        ArrayList<Integer> randomizedColor = new ArrayList<>();
+        colors.add(color(138, 30, 70)); // maroon
+        colors.add(color(112, 28, 201)); // purple
+        colors.add(color(201, 26, 196)); // pink
+        colors.add(color(237, 111, 43)); // orange
+        colors.add(color(37, 217, 76)); // light green
+        colors.add(color(237, 201, 40)); // yellow
+        colors.add(color(34, 107, 201)); // blue
+        colors.add(color(130, 103, 191)); // light purple
+        colors.add(color(36, 201, 163)); // teal
+        while (colors.size() > 0) {
+            int index = (int) random(colors.size());
+            randomizedColor.add(colors.get(index));
+            colors.remove(index);
         }
+        return randomizedColor;
     }
-
-    public void readHighScore() {
-        // we create a scanner for reading the file
-        try (Scanner scanner = new Scanner(Paths.get("Highscore.txt"))) {
-            // we read the file until all lines have been read
-            while (scanner.hasNextLine()) {
-                // we read one line
-                String row = scanner.nextLine();
-                // we print the line that we read
-                highScore = Integer.valueOf(row);
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    public void checkBlockPos(Block b, Block Block) {
-        if (Block.ballVisible() == false) { // checking if the ball is not visible
-            Block.setBallColor(b.getBallColor()); // setting the ball to the other color
-            Block.changeVisible();
-            b.changeVisible();
-            moves++;
-        }
-    }
-    // public void checkCorrect(Block b, Block Block){
-    // if (b.getBallColor() == getBlockColor()){
+    // public void checkCorrect(Block b, Block Block) {
+    // if (b.getBallColor() == getBlockColor()) {
     // correct = true;
-    // rightPlace ++ ;
-    // }
-    // else {
+    // rightPlace++;
+    // } else {
     // correct = false;
     // int rightPlace = 0;
     // }
     // }
+
 }
 // = delcare
 // == Compare
