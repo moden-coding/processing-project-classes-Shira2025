@@ -22,10 +22,6 @@ public class Ball {
       canvas.circle(x, y, radius * 2);
    }
 
-   public int randomColor() { // want to use 
-      return canvas.color(canvas.random(255), canvas.random(255), canvas.random(255)); // random color
-   }
-
    boolean isMouseInside(float mouseX, float mouseY) { // chat gpt math 
       // Calculate the squared distance between the mouse and the circle's center
       float dx = mouseX - x;

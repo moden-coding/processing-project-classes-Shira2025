@@ -37,10 +37,6 @@ public class Block {
         ballVisible = !ballVisible;
     }
 
-    public boolean isMouseInside(int mouseX, int mouseY) { // checking if mouse inside ball 
-        return myBall.isMouseInside(mouseX, mouseY);
-    }
-
     public boolean ballVisible() { // the ball visiblity 
         return ballVisible;
     }
@@ -55,5 +51,9 @@ public class Block {
 
     public int getBlockColor() { // getting block color  
         return color;
+    }
+
+    public boolean isMouseInside(int mouseX, int mouseY) { // checking if mouse inside ball 
+        return myBall.isMouseInside(mouseX, mouseY);
     }
 }

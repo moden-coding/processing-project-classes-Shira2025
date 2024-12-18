@@ -11,16 +11,14 @@ public class App extends PApplet {
     int moves = 0;
     int highScore = 10000;
     int time = 0; // need milis in here
-    int[] colors;
-    int[] ballColors;
     int scene = 0;
-    boolean correct = true;
-    int rightPlace = 0;
     int boxHeight = 100;
     int boxWidth = 200;
     int buttonX = 300;
     int instructionsY = 400;
     int gamePlayY = 600;
+    boolean correct = true;
+    int rightPlace = 0;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -37,12 +35,17 @@ public class App extends PApplet {
     }
 
     public void draw() {
+        time = millis();
         if (scene == 0) {
             gameSet();
+            text("time:"+ time, 50,50);
         } else if (scene == 1) {
             instrucions();
         } else if (scene == 2) {
             gamePlay();
+            if (checkCorrect() == true ){
+                scene = 3;
+            } 
         } else if (scene == 3) {
             notGamePlay();
         }
@@ -81,7 +84,7 @@ public class App extends PApplet {
     public void instrucions() {
         background(66, 245, 179);// light green
         strokeWeight(2);
-        fill(34, 107, 201); // pink box
+        fill(34, 107, 201); // pink back box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
@@ -89,19 +92,27 @@ public class App extends PApplet {
     }
 
     public void notGamePlay() { // moves screen
-        background(143, 155, 176);// blue gray
-        readHighScore();
-        if (highScore > moves) {
-            highScore = moves;
-            saveMoves();
+            background(143, 155, 176);// blue gray
+            fill(34, 107, 201); // blue back box
+            rect(50, 710, 125, 75);// back box
+            fill(0);
+            text("Back", 60, 760);
+            readHighScore();
+            if (highScore > moves) {
+                highScore = moves;
+                saveMoves();
+            }
+            textSize(50);
+            fill(0);
+            text("Moves:", 300, 300);
+            text(moves, 450, 300);
+            text("High score:", 300, 500);
+            text(highScore, 550, 500);
+      
+            textSize(45);
+       
         }
-        textSize(50);
-        fill(0);
-        text("Moves:", 300, 300);
-        text(moves, 450, 300);
-        text("High score:", 300, 500);
-        text(highScore, 550, 500);
-    }
+    
 
     public void keyPressed() { // maybe a keypressed for highscore
         if (key == ' ') {
@@ -174,21 +185,25 @@ public class App extends PApplet {
                 if (i % 3 != 2) {
                     Block rightBlock = blocks.get(i + 1);
                     checkBlockPos(b, rightBlock);
+                    checkCorrect();
                 }
                 // check left
                 if (i % 3 != 0) {
                     Block leftBlock = blocks.get(i - 1);
                     checkBlockPos(b, leftBlock);
+                    checkCorrect();
                 }
                 // check up
                 if (i / 3 != 0) {
                     Block upBlock = blocks.get(i - 3);
                     checkBlockPos(b, upBlock);
+                    checkCorrect();
                 }
                 // check down
                 if (i / 3 != 2) {
                     Block downBlock = blocks.get(i + 3);
                     checkBlockPos(b, downBlock);
+                    checkCorrect();
                 }
             }
         }
@@ -225,22 +240,20 @@ public class App extends PApplet {
         return randomizedColor;
     }
 
-    public void checkCorrect(Block b, Block Block) {
-        if (b.getBallColor() == Block.getBlockColor()) {
-            correct = true;
-            rightPlace++;
-            System.out.println(rightPlace);
-        } else {
-            correct = false;
-            rightPlace--;
-            System.out.println(rightPlace);
+    public boolean checkCorrect() {
+        for (Block b : blocks) {
+            if (b.ballVisible() == true && b.getBallColor() != b.getBlockColor()) {
+                System.out.println("n/c");
+                return false;
+            }
         }
+        System.out.println("c");
+        return true;
     }
-
 }
+
 // = delcare
 // == Compare
 
-// 4x4
 // timer
-// final screen with score and moves
+
