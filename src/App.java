@@ -38,7 +38,7 @@ public class App extends PApplet {
         time = millis();
         if (scene == 0) {
             gameSet();
-            text("time:"+ time, 50,50);
+            //text("time:"+ time, 50,50);
         } else if (scene == 1) {
             instrucions();
         } else if (scene == 2) {
@@ -108,9 +108,10 @@ public class App extends PApplet {
             text(moves, 450, 300);
             text("High score:", 300, 500);
             text(highScore, 550, 500);
-      
-            textSize(45);
-       
+            fill(3, 244, 252); // blue restart box
+            rect(buttonX, 575, boxWidth, 100);// restart box
+            fill(0);
+            text("Restart", 325, 625);
         }
     
 
