@@ -10,6 +10,7 @@ public class App extends PApplet {
     ArrayList<Block> blocks;
     int moves = 0;
     int highScore = 10000;
+    double highTime = 10000;
     double time; // need milis in here
     int scene = 0;
     int boxHeight = 100;
@@ -28,6 +29,7 @@ public class App extends PApplet {
         blocks = new ArrayList<>();
         blockMaker();
         readHighScore();
+        readHighTime();
     }
 
     public void settings() {// Set the size of the window
@@ -105,21 +107,29 @@ public class App extends PApplet {
         fill(0);
         text("Back", 60, 760);
         readHighScore();
+        readHighTime();
         if (highScore > moves) {
             highScore = moves;
             saveMoves();
         }
+        if (highTime > time) {
+            highTime = time;
+            saveHighTime();
+        }
         textSize(50);
         fill(0);
-        text("Moves:", 300, 300);
-        text(moves, 450, 300);
-        text("High score:", 300, 500);
-        text(highScore, 550, 500);
+        text("Moves:", 50, 50);
+        text(moves, 200, 50);
+        text("High score:", 400, 55);
+        text(highScore, 650, 55);
         fill(105, 58, 181);// purple
         rect(325, 600, 200, 100);// play again box
         fill(0);
         textSize(40);
         text("Play again", 340, 650);
+        textSize(50);
+        text("Time " + time, 50, 300);
+        text("Fastest time " + highTime, 400, 300);
     }
 
     public void keyPressed() { // maybe a keypressed for highscore
@@ -149,6 +159,30 @@ public class App extends PApplet {
                 String row = scanner.nextLine();
                 // we print the line that we read
                 highScore = Integer.valueOf(row);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    public void saveHighTime() {
+        try (PrintWriter writer = new PrintWriter("Time.txt")) {
+            writer.println(time); // Writes the integer to the file
+            writer.close(); // Closes the writer and saves the file
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+            e.printStackTrace();
+        }
+    }
+
+    public void readHighTime() {
+        // we create a scanner for reading the file
+        try (Scanner scanner = new Scanner(Paths.get("Time.txt"))) {
+            // we read the file until all lines have been read
+            while (scanner.hasNextLine()) {
+                // we read one line
+                String row = scanner.nextLine();
+                // we print the line that we read
+                time = Double.valueOf(row);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -228,6 +262,7 @@ public class App extends PApplet {
         }
         if (mouseX > 325 && mouseY > 600 && mouseX < 325 + 200 && mouseY < 600 + 100 && scene == 3) {// play again 
             scene = 2;
+            // blocks.clear();
         }
     }
 
@@ -264,4 +299,3 @@ public class App extends PApplet {
 // = delcare
 // == Compare
 
-// timer
