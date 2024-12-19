@@ -10,7 +10,7 @@ public class App extends PApplet {
     ArrayList<Block> blocks;
     int moves = 0;
     int highScore = 10000;
-    int time = 0; // need milis in here
+    double time; // need milis in here
     int scene = 0;
     int boxHeight = 100;
     int boxWidth = 200;
@@ -35,17 +35,15 @@ public class App extends PApplet {
     }
 
     public void draw() {
-        time = millis();
         if (scene == 0) {
             gameSet();
-            //text("time:"+ time, 50,50);
         } else if (scene == 1) {
             instrucions();
         } else if (scene == 2) {
             gamePlay();
-            if (checkCorrect() == true ){
+            if (checkCorrect() == true) {
                 scene = 3;
-            } 
+            }
         } else if (scene == 3) {
             notGamePlay();
         }
@@ -73,12 +71,20 @@ public class App extends PApplet {
             strokeWeight(5);
             B.display();
         }
+        fill(0);
+        text("Time:" + time, 25, 45);
         strokeWeight(2);
         fill(34, 107, 201); // pink box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
         text("Back", 60, 760);
+    }
+
+    public void startTime() { // staring time counter
+        if (scene == 2) {
+            time = (millis() / 100) / 10.0;
+        }
     }
 
     public void instrucions() {
@@ -92,28 +98,24 @@ public class App extends PApplet {
     }
 
     public void notGamePlay() { // moves screen
-            background(143, 155, 176);// blue gray
-            fill(34, 107, 201); // blue back box
-            rect(50, 710, 125, 75);// back box
-            fill(0);
-            text("Back", 60, 760);
-            readHighScore();
-            if (highScore > moves) {
-                highScore = moves;
-                saveMoves();
-            }
-            textSize(50);
-            fill(0);
-            text("Moves:", 300, 300);
-            text(moves, 450, 300);
-            text("High score:", 300, 500);
-            text(highScore, 550, 500);
-            fill(3, 244, 252); // blue restart box
-            rect(buttonX, 575, boxWidth, 100);// restart box
-            fill(0);
-            text("Restart", 325, 625);
+        startTime();
+        background(143, 155, 176);// blue gray
+        fill(34, 107, 201); // blue back box
+        rect(50, 710, 125, 75);// back box
+        fill(0);
+        text("Back", 60, 760);
+        readHighScore();
+        if (highScore > moves) {
+            highScore = moves;
+            saveMoves();
         }
-    
+        textSize(50);
+        fill(0);
+        text("Moves:", 300, 300);
+        text(moves, 450, 300);
+        text("High score:", 300, 500);
+        text(highScore, 550, 500);
+    }
 
     public void keyPressed() { // maybe a keypressed for highscore
         if (key == ' ') {
@@ -244,11 +246,9 @@ public class App extends PApplet {
     public boolean checkCorrect() {
         for (Block b : blocks) {
             if (b.ballVisible() == true && b.getBallColor() != b.getBlockColor()) {
-                System.out.println("n/c");
                 return false;
             }
         }
-        System.out.println("c");
         return true;
     }
 }
@@ -257,4 +257,3 @@ public class App extends PApplet {
 // == Compare
 
 // timer
-
