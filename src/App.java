@@ -10,8 +10,6 @@ public class App extends PApplet {
     ArrayList<Block> blocks;
     int moves = 0;
     int highScore = 10000;
-    double highTime = 10000;
-    double time; // need milis in here
     int scene = 0;
     int boxHeight = 100;
     int boxWidth = 200;
@@ -19,7 +17,9 @@ public class App extends PApplet {
     int instructionsY = 400;
     int gamePlayY = 600;
     boolean correct = true;
-    int rightPlace = 0;
+    double highTime = 10000;
+    double time = 0.0;
+    boolean timeCounting = false;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -56,7 +56,7 @@ public class App extends PApplet {
         background(143, 155, 176);// blue gray
         textSize(100);
         fill(174, 52, 235);
-        text("Solve It", 250, 100);
+        text("Slider", 250, 100);
         textSize(35);
         fill(128, 237, 230);
         rect(buttonX, instructionsY, boxWidth, boxHeight);// for instructions
@@ -65,6 +65,24 @@ public class App extends PApplet {
         text("Instructions", 320, 450);
         textSize(60);
         text("Play", 340, 670);
+    }
+
+    public void instrucions() {
+        background(66, 245, 179);// light green
+        textSize(100);
+        fill(174, 52, 235);
+        text("Slider", 250, 100);
+        strokeWeight(2);
+        fill(34, 107, 201); // pink back box
+        rect(50, 710, 125, 75);// back box
+        fill(0);
+        textSize(45);
+        text("Back", 60, 760);
+        textSize(30);
+        text("-The goal of this game is to", 20, 140);
+        text("match the ball color to the block color", 20, 190);
+        text("-Press on a ball to move it", 20, 250);
+        text("-The lower the score, the better", 20, 300);
     }
 
     public void gamePlay() { // showing balls and gamescreen
@@ -78,22 +96,6 @@ public class App extends PApplet {
         text("Time:" + time, 25, 45);
         strokeWeight(2);
         fill(34, 107, 201); // pink box
-        rect(50, 710, 125, 75);// back box
-        fill(0);
-        textSize(45);
-        text("Back", 60, 760);
-    }
-
-    public void startTime() { // staring time counter
-        if (scene == 2) {
-            time = (millis() / 100) / 10.0;
-        }
-    }
-
-    public void instrucions() {
-        background(66, 245, 179);// light green
-        strokeWeight(2);
-        fill(34, 107, 201); // pink back box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
@@ -132,6 +134,12 @@ public class App extends PApplet {
         text("Fastest time " + highTime, 400, 300);
     }
 
+    public void startTime() { // staring time counter
+        if (scene == 2 && timeCounting == true) {
+            time = (millis() / 100) / 10.0;
+        }
+    }
+
     public void keyPressed() { // maybe a keypressed for highscore
         if (key == ' ') {
             scene = 2;
@@ -164,6 +172,7 @@ public class App extends PApplet {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
     public void saveHighTime() {
         try (PrintWriter writer = new PrintWriter("Time.txt")) {
             writer.println(time); // Writes the integer to the file
@@ -255,14 +264,20 @@ public class App extends PApplet {
         }
         if (mouseX > buttonX && mouseY > gamePlayY && mouseX < buttonX + boxWidth
                 && mouseY < gamePlayY + boxWidth && scene == 0) {// gameplay
+            time = 0.0;
+            timeCounting = true;
             scene = 2;
+
         }
         if (mouseX > 50 && mouseY > 710 && mouseX < 50 + 125 && mouseY < 710 + 75) {// back
             scene = 0;
         }
-        if (mouseX > 325 && mouseY > 600 && mouseX < 325 + 200 && mouseY < 600 + 100 && scene == 3) {// play again 
-            scene = 2;
-            // blocks.clear();
+        if (mouseX > 325 && mouseY > 600 && mouseX < 325 + 200 && mouseY < 600 + 100
+        && scene == 3) {// play again
+        scene = 2;
+        blocks.clear();
+        blockMaker();
+        moves = 0;
         }
     }
 
@@ -299,3 +314,5 @@ public class App extends PApplet {
 // = delcare
 // == Compare
 
+// time isnt working right 
+// reset isnt working right?
