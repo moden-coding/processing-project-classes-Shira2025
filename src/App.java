@@ -66,6 +66,7 @@ public class App extends PApplet {
     }
 
     public void gamePlay() { // showing balls and gamescreen
+        startTime();
         background(92, 109, 138);// dark blue gray
         for (Block B : blocks) {
             strokeWeight(5);
@@ -98,7 +99,6 @@ public class App extends PApplet {
     }
 
     public void notGamePlay() { // moves screen
-        startTime();
         background(143, 155, 176);// blue gray
         fill(34, 107, 201); // blue back box
         rect(50, 710, 125, 75);// back box
@@ -115,6 +115,11 @@ public class App extends PApplet {
         text(moves, 450, 300);
         text("High score:", 300, 500);
         text(highScore, 550, 500);
+        fill(105, 58, 181);// purple
+        rect(325, 600, 200, 100);// play again box
+        fill(0);
+        textSize(40);
+        text("Play again", 340, 650);
     }
 
     public void keyPressed() { // maybe a keypressed for highscore
@@ -220,6 +225,9 @@ public class App extends PApplet {
         }
         if (mouseX > 50 && mouseY > 710 && mouseX < 50 + 125 && mouseY < 710 + 75) {// back
             scene = 0;
+        }
+        if (mouseX > 325 && mouseY > 600 && mouseX < 325 + 200 && mouseY < 600 + 100 && scene == 3) {// play again 
+            scene = 2;
         }
     }
 
