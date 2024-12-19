@@ -20,6 +20,7 @@ public class App extends PApplet {
     double highTime = 10000;
     double time = 0.0;
     boolean timeCounting = false;
+    int startTime;
 
     public static void main(String[] args) {
         PApplet.main("App");
@@ -53,12 +54,12 @@ public class App extends PApplet {
     }
 
     public void gameSet() { // the start screen
-        background(143, 155, 176);// blue gray
+        background(255, 215, 212);// light pink
         textSize(100);
-        fill(174, 52, 235);
+        fill(214, 39, 97);// pink
         text("Slider", 250, 100);
         textSize(35);
-        fill(128, 237, 230);
+        fill(245, 95, 110);// red
         rect(buttonX, instructionsY, boxWidth, boxHeight);// for instructions
         rect(buttonX, gamePlayY, boxWidth, boxHeight); // for gameplay
         fill(0);
@@ -67,13 +68,13 @@ public class App extends PApplet {
         text("Play", 340, 670);
     }
 
-    public void instrucions() {
-        background(66, 245, 179);// light green
+    public void instrucions() { // instrucions of how to play
+        background(250, 245, 182);// light green
         textSize(100);
-        fill(174, 52, 235);
+        fill(0);
         text("Slider", 250, 100);
         strokeWeight(2);
-        fill(34, 107, 201); // pink back box
+        fill(251, 255, 41); // yellow back box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
@@ -86,8 +87,8 @@ public class App extends PApplet {
     }
 
     public void gamePlay() { // showing balls and gamescreen
+        background(173, 173, 173);// gray
         startTime();
-        background(92, 109, 138);// dark blue gray
         for (Block B : blocks) {
             strokeWeight(5);
             B.display();
@@ -95,16 +96,16 @@ public class App extends PApplet {
         fill(0);
         text("Time:" + time, 25, 45);
         strokeWeight(2);
-        fill(34, 107, 201); // pink box
+        fill(82, 82, 82); // orange back box
         rect(50, 710, 125, 75);// back box
         fill(0);
         textSize(45);
         text("Back", 60, 760);
     }
 
-    public void notGamePlay() { // moves screen
-        background(143, 155, 176);// blue gray
-        fill(34, 107, 201); // blue back box
+    public void notGamePlay() { // moves and time screen
+        background(255, 251, 128);// yellow
+        fill(251, 255, 56); // yellow back box
         rect(50, 710, 125, 75);// back box
         fill(0);
         text("Back", 60, 760);
@@ -124,7 +125,7 @@ public class App extends PApplet {
         text(moves, 200, 50);
         text("High score:", 400, 55);
         text(highScore, 650, 55);
-        fill(105, 58, 181);// purple
+        fill(208, 212, 0);// yellow
         rect(325, 600, 200, 100);// play again box
         fill(0);
         textSize(40);
@@ -136,14 +137,16 @@ public class App extends PApplet {
 
     public void startTime() { // staring time counter
         if (scene == 2 && timeCounting == true) {
-            time = (millis() / 100) / 10.0;
+            time = ((millis() - startTime) / 100) / 10.0;
         }
     }
 
     public void keyPressed() { // maybe a keypressed for highscore
         if (key == ' ') {
             scene = 2;
-        } else if (key == 'v') {
+            startTime = millis();
+
+        } else if (key == 'v') { // may need if puzzle isn't able to be solved
             scene = 3;
         }
     }
@@ -175,7 +178,7 @@ public class App extends PApplet {
 
     public void saveHighTime() {
         try (PrintWriter writer = new PrintWriter("Time.txt")) {
-            writer.println(time); // Writes the integer to the file
+            writer.println(highTime); // Writes the integer to the file
             writer.close(); // Closes the writer and saves the file
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the file.");
@@ -191,14 +194,14 @@ public class App extends PApplet {
                 // we read one line
                 String row = scanner.nextLine();
                 // we print the line that we read
-                time = Double.valueOf(row);
+                highTime = Double.valueOf(row);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    public void checkBlockPos(Block b, Block Block) {
+    public void checkBlockPos(Block b, Block Block) { // checking and switching ball colors
         if (Block.ballVisible() == false) { // checking if the ball is not visible
             Block.setBallColor(b.getBallColor()); // setting the ball to the other color
             Block.changeVisible();
@@ -228,7 +231,7 @@ public class App extends PApplet {
         blocks.get(8).changeVisible(); // hide the last ball
     }
 
-    public void mousePressed() {
+    public void mousePressed() {// checking if mouse pressed then moving ball and checking if its all correct
         for (int i = 0; i < blocks.size(); i++) {
             Block b = blocks.get(i);
             if (b.isMouseInside(mouseX, mouseY)) {
@@ -266,6 +269,7 @@ public class App extends PApplet {
                 && mouseY < gamePlayY + boxWidth && scene == 0) {// gameplay
             time = 0.0;
             timeCounting = true;
+            startTime = millis();
             scene = 2;
 
         }
@@ -273,26 +277,29 @@ public class App extends PApplet {
             scene = 0;
         }
         if (mouseX > 325 && mouseY > 600 && mouseX < 325 + 200 && mouseY < 600 + 100
-        && scene == 3) {// play again
-        scene = 2;
-        blocks.clear();
-        blockMaker();
-        moves = 0;
+                && scene == 3) {// play again
+            time = 0.0;
+            timeCounting = true;
+            startTime = millis();
+            scene = 2;
+            blocks.clear();
+            blockMaker();
+            moves = 0;
         }
     }
 
     public ArrayList<Integer> getRandomColors() {
         ArrayList<Integer> colors = new ArrayList<>();
         ArrayList<Integer> randomizedColor = new ArrayList<>();
-        colors.add(color(138, 30, 70)); // maroon
-        colors.add(color(112, 28, 201)); // purple
-        colors.add(color(201, 26, 196)); // pink
-        colors.add(color(237, 111, 43)); // orange
-        colors.add(color(37, 217, 76)); // light green
-        colors.add(color(237, 201, 40)); // yellow
-        colors.add(color(34, 107, 201)); // blue
-        colors.add(color(130, 103, 191)); // light purple
-        colors.add(color(36, 201, 163)); // teal
+        colors.add(color(255, 114, 92)); // red
+        colors.add(color(255, 168, 92)); // orange
+        colors.add(color(255, 252, 143)); // yellow
+        colors.add(color(197, 255, 143)); // light green
+        colors.add(color(83, 194, 131)); // dark green
+        colors.add(color(114, 250, 252)); // light blue
+        colors.add(color(89, 175, 255)); // blue
+        colors.add(color(184, 102, 255)); // light purple
+        colors.add(color(255, 99, 206)); // pink
         while (colors.size() > 0) {
             int index = (int) random(colors.size());
             randomizedColor.add(colors.get(index));
@@ -313,6 +320,3 @@ public class App extends PApplet {
 
 // = delcare
 // == Compare
-
-// time isnt working right 
-// reset isnt working right?

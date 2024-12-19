@@ -24,36 +24,35 @@ public class Block {
         ballVisible = true;
     }
 
-    public void display() { // showing to canvas 
+    public void display() { // showing to canvas
         canvas.fill(color);
         canvas.rect(x, y, width, height);
         if (ballVisible) {
             myBall.display();
         }
-
     }
 
-    public void changeVisible() {// making the previous ball not visible or visible 
+    public void changeVisible() {// making the previous ball not visible or visible
         ballVisible = !ballVisible;
     }
 
-    public boolean ballVisible() { // the ball visiblity 
+    public boolean ballVisible() { // the ball visiblity
         return ballVisible;
     }
 
-    public int getBallColor() { // givng the ball color 
+    public int getBallColor() { // givng the ball color
         return myBall.getColor();
     }
 
-    public void setBallColor(int color) { // setting ball color 
+    public void setBallColor(int color) { // setting ball color
         myBall.setColor(color);
     }
 
-    public int getBlockColor() { // getting block color  
+    public int getBlockColor() { // getting block color
         return color;
     }
 
-    public boolean isMouseInside(int mouseX, int mouseY) { // checking if mouse inside ball 
+    public boolean isMouseInside(int mouseX, int mouseY) { // checking if mouse inside ball
         return myBall.isMouseInside(mouseX, mouseY);
     }
 }

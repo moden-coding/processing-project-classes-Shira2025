@@ -8,7 +8,7 @@ public class Ball {
    public int number;
    private int color;
 
-   public Ball(int xPos, int yPos, int color, PApplet c) { // making ball 
+   public Ball(int xPos, int yPos, int color, PApplet c) { // making ball
       x = xPos;
       y = yPos;
       canvas = c;
@@ -22,7 +22,7 @@ public class Ball {
       canvas.circle(x, y, radius * 2);
    }
 
-   boolean isMouseInside(float mouseX, float mouseY) { // chat gpt math 
+   boolean isMouseInside(float mouseX, float mouseY) { // CHAT GPT math
       // Calculate the squared distance between the mouse and the circle's center
       float dx = mouseX - x;
       float dy = mouseY - y;
@@ -39,7 +39,7 @@ public class Ball {
       return color;
    }
 
-   public void setColor(int c) { // setting the color of ball 
+   public void setColor(int c) { // setting the color of ball
       color = c;
    }
 }
