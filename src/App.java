@@ -57,7 +57,7 @@ public class App extends PApplet {
         background(255, 215, 212);// light pink
         textSize(100);
         fill(214, 39, 97);// pink
-        text("Slider", 250, 100);
+        text("Slider", 275, 100);
         textSize(35);
         fill(245, 95, 110);// red
         rect(buttonX, instructionsY, boxWidth, boxHeight);// for instructions
@@ -72,7 +72,7 @@ public class App extends PApplet {
         background(250, 245, 182);// light green
         textSize(100);
         fill(0);
-        text("Slider", 250, 100);
+        text("Slider", 275, 100);
         strokeWeight(2);
         fill(251, 255, 41); // yellow back box
         rect(50, 710, 125, 75);// back box
@@ -84,6 +84,21 @@ public class App extends PApplet {
         text("match the ball color to the block color", 20, 190);
         text("-Press on a ball to move it", 20, 250);
         text("-The lower the score, the better", 20, 300);
+        fill(255, 0, 0);
+        text("-SOMETIMES THIS IS NOT SOLVABLE", 20, 400);
+        text("-Two of the balls and corresponding box's will be inverted", 20, 450);
+        text("-It may look like:", 20, 500);
+        fill(255, 114, 92);
+        rect(250, 475, 50,50);
+        fill(89, 175, 255);
+        rect(300, 475, 50,50);
+        circle(275, 500, 40);
+        fill(255, 114, 92);
+        circle(325, 500, 40);
+        fill(255, 0, 0);
+        text("after the rest of circles", 360, 500);
+        text("are in the correct spot",20, 550);
+        text("-if so press space to see your score",20, 600);
     }
 
     public void gamePlay() { // showing balls and gamescreen
@@ -142,11 +157,11 @@ public class App extends PApplet {
     }
 
     public void keyPressed() { // maybe a keypressed for highscore
-        if (key == ' ') {
-            scene = 2;
-            startTime = millis();
-
-        } else if (key == 'v') { // may need if puzzle isn't able to be solved
+        // if (key == '2') {
+        //     scene = 2;
+        //     startTime = millis();
+        // } 
+        if (key == ' ') { // may need if puzzle isn't able to be solved
             scene = 3;
         }
     }
