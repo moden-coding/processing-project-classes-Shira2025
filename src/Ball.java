@@ -8,13 +8,12 @@ public class Ball {
    public int number;
    private int color;
 
-   public Ball(int xPos, int yPos, int color, PApplet c) { // making ball
+   public Ball(int xPos, int yPos, int color, PApplet c) { // ball
       x = xPos;
       y = yPos;
       canvas = c;
       this.radius = 50;
       this.color = color;
-      // color = canvas.color(128, 138, 171);// color = col; randomColor()
    }
 
    public void display() {

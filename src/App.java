@@ -86,7 +86,7 @@ public class App extends PApplet {
         text("-The lower the score, the better", 20, 300);
         fill(255, 0, 0);
         text("-SOMETIMES THIS IS NOT SOLVABLE", 20, 400);
-        text("-Two of the balls and corresponding box's will be inverted", 20, 450);
+        text("-Two of the balls and their corresponding box's will be inverted", 20, 450);
         text("-It may look like:", 20, 500);
         fill(255, 114, 92);
         rect(250, 475, 50,50);
@@ -98,7 +98,7 @@ public class App extends PApplet {
         fill(255, 0, 0);
         text("after the rest of circles", 360, 500);
         text("are in the correct spot",20, 550);
-        text("-if so press space to see your score",20, 600);
+        text("-If so: press space to see your score",20, 600);
     }
 
     public void gamePlay() { // showing balls and gamescreen
@@ -157,10 +157,6 @@ public class App extends PApplet {
     }
 
     public void keyPressed() { // maybe a keypressed for highscore
-        // if (key == '2') {
-        //     scene = 2;
-        //     startTime = millis();
-        // } 
         if (key == ' ') { // may need if puzzle isn't able to be solved
             scene = 3;
         }
@@ -303,7 +299,7 @@ public class App extends PApplet {
         }
     }
 
-    public ArrayList<Integer> getRandomColors() {
+    public ArrayList<Integer> getRandomColors() { // random colors for ball 
         ArrayList<Integer> colors = new ArrayList<>();
         ArrayList<Integer> randomizedColor = new ArrayList<>();
         colors.add(color(255, 114, 92)); // red
@@ -323,7 +319,7 @@ public class App extends PApplet {
         return randomizedColor;
     }
 
-    public boolean checkCorrect() {
+    public boolean checkCorrect() { // checking if balls are in correct box 
         for (Block b : blocks) {
             if (b.ballVisible() == true && b.getBallColor() != b.getBlockColor()) {
                 return false;
