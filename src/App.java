@@ -328,6 +328,3 @@ public class App extends PApplet {
         return true;
     }
 }
-
-// = delcare
-// == Compare
