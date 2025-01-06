@@ -40,7 +40,7 @@ public class Block {
         return ballVisible;
     }
 
-    public int getBallColor() { // givng the ball color
+    public int getBallColor() { // getting the ball color
         return myBall.getColor();
     }
 

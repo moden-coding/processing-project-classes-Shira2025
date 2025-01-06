@@ -26,7 +26,7 @@ public class App extends PApplet {
         PApplet.main("App");
     }
 
-    public void setup() { // make the lists and check list and make blocks
+    public void setup() { // make block list,run checking 
         blocks = new ArrayList<>();
         blockMaker();
         readHighScore();
@@ -48,7 +48,7 @@ public class App extends PApplet {
                 scene = 3;
             }
         } else if (scene == 3) {
-            notGamePlay();
+            endScreen();
         }
 
     }
@@ -68,7 +68,7 @@ public class App extends PApplet {
         text("Play", 340, 670);
     }
 
-    public void instrucions() { // instrucions of how to play
+    public void instrucions() { // how to play
         background(250, 245, 182);// light green
         textSize(100);
         fill(0);
@@ -118,7 +118,7 @@ public class App extends PApplet {
         text("Back", 60, 760);
     }
 
-    public void notGamePlay() { // moves and time screen
+    public void endScreen() { // moves and time screen
         background(255, 251, 128);// yellow
         fill(251, 255, 56); // yellow back box
         rect(50, 710, 125, 75);// back box
@@ -242,7 +242,9 @@ public class App extends PApplet {
         blocks.get(8).changeVisible(); // hide the last ball
     }
 
-    public void mousePressed() {// checking if mouse pressed then moving ball and checking if its all correct
+    public void mousePressed() {// if mouse pressed then move ball (if possible),
+                               //checking if its all correct, 
+                              //checking if buttons are pressed
         for (int i = 0; i < blocks.size(); i++) {
             Block b = blocks.get(i);
             if (b.isMouseInside(mouseX, mouseY)) {
@@ -299,7 +301,7 @@ public class App extends PApplet {
         }
     }
 
-    public ArrayList<Integer> getRandomColors() { // random colors for ball 
+    public ArrayList<Integer> getRandomColors() { // random colors for balls and blocks
         ArrayList<Integer> colors = new ArrayList<>();
         ArrayList<Integer> randomizedColor = new ArrayList<>();
         colors.add(color(255, 114, 92)); // red
